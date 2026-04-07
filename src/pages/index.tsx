@@ -15,7 +15,7 @@ export default function Home() {
     <div
       className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
     >
-      <h1 className="text-zinc-50">Hello World</h1>
+      <h1 className="text-zinc-900">Hello World</h1>
     </div>
   )
 }
