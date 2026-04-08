@@ -1,19 +1,12 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import { Logo } from '../logo'
 
 export const Footer = () => {
   return (
     <footer className="border-white/10 border-t">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between gap-8 py-8 md:flex-row">
-          <Link href="/">
-            <Image
-              alt="Logo Site.Set"
-              height={32}
-              src="/logo.svg"
-              width={116}
-            />
-          </Link>
+          <Logo />
 
           <nav className="itens-center flex flex-col gap-4 text-muted-foreground text-sm md:flex-row">
             <Link className="hover:text-primary" href="/termos-de-uso">
