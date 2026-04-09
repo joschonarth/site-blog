@@ -1,3 +1,9 @@
+import { HeroSection } from '@/components/hero-section'
+
 export default function Home() {
-  return <div className={'flex min-h-screen items-center justify-center'} />
+  return (
+    <article className="flex flex-col">
+      <HeroSection />
+    </article>
+  )
 }
