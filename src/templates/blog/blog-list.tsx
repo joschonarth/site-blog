@@ -1,4 +1,5 @@
 import { allPosts } from 'contentlayer/generated'
+import { Inbox } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { Search } from '@/components/search'
 import { PostCard } from './components/post-card'
@@ -12,7 +13,13 @@ export function BlogList() {
     ? `Resultados de busca para "${query}"`
     : 'Dicas e estratégias para impulsionar seu negócio'
 
-  const posts = allPosts
+  const posts = query
+    ? allPosts.filter((post) =>
+        post.title.toLowerCase()?.includes(query.toLowerCase())
+      )
+    : allPosts
+
+  const hasPosts = posts.length > 0
 
   return (
     <div className="flex h-full flex-grow flex-col py-24">
@@ -32,22 +39,34 @@ export function BlogList() {
         </div>
       </header>
 
-      <PostGridCard>
-        {posts.map((post) => (
-          <PostCard
-            author={{
-              avatar: post.author.avatar,
-              name: post.author.name,
-            }}
-            date={new Date(post.date).toLocaleDateString('pt-BR')}
-            description={post.description}
-            image={post.image}
-            key={post._id}
-            slug={post.slug}
-            title={post.title}
-          />
-        ))}
-      </PostGridCard>
+      {hasPosts && (
+        <PostGridCard>
+          {posts.map((post) => (
+            <PostCard
+              author={{
+                avatar: post.author.avatar,
+                name: post.author.name,
+              }}
+              date={new Date(post.date).toLocaleDateString('pt-BR')}
+              description={post.description}
+              image={post.image}
+              key={post._id}
+              slug={post.slug}
+              title={post.title}
+            />
+          ))}
+        </PostGridCard>
+      )}
+
+      {!hasPosts && (
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center justify-center gap-8 rounded-lg border-2 border-gray-300 border-dashed p-8 md:p-12">
+            <Inbox className="h-12 w-12 text-cyan-100" />
+
+            <p className="text-center text-gray-100">Nenhum post encontrado.</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
