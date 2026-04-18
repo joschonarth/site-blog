@@ -2,7 +2,7 @@
 title: Como atrair consumidores
 description: Atrair consumidores para sua loja online é uma das chaves para o sucesso no e-commerce. Descubra estratégias eficazes de marketing para conquistar novos clientes e criar uma experiência de compra inesquecível.
 date: 2024/12/22 10:20:00
-image: /assets/terceiro-post.png
+image: /assets/primeiro-post.png
 author:
   name: Aspen Dokidis
   avatar: /customer-01.png

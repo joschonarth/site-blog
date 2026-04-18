@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Avatar } from '@/components/avatar'
+import { Markdown } from '@/components/markdown'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,7 +17,7 @@ export default function PostPage() {
   const slug = router.query.slug as string
 
   const post = allPosts.find(
-    (post) => post.slug.toLowerCase() === slug.toLowerCase()
+    (post) => slug && post.slug.toLowerCase() === slug.toLowerCase()
   )
 
   if (!post) {
@@ -27,48 +28,59 @@ export default function PostPage() {
 
   return (
     <main className="mt-32 text-gray-100">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild className="text-action-sm">
-              <Link href="/blog">Blog</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <span className="text-action-sm text-blue-200">{post?.title}</span>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <div className="container space-y-12 px-4 md:px-8">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild className="text-action-sm">
+                <Link href="/blog">Blog</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <span className="text-action-sm text-blue-200">
+                {post?.title}
+              </span>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_300px] lg:gap-12">
-        <article className="overflow-hidden rounded-lg border-[1px] border-gray-400 bg-gray-600">
-          <figure className="relative aspect-[16/10] w-full overflow-hidden rounded-lg">
-            <Image
-              alt={post?.title ?? ''}
-              className="object-cover"
-              fill
-              src={post?.image ?? ''}
-            />
-          </figure>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_300px] lg:gap-12">
+          <article className="overflow-hidden rounded-lg border-[1px] border-gray-400 bg-gray-600">
+            <figure className="relative aspect-[16/10] w-full overflow-hidden rounded-lg">
+              <Image
+                alt={post?.title ?? ''}
+                className="object-cover"
+                fill
+                src={post?.image ?? ''}
+              />
+            </figure>
 
-          <header className="p-4 pb-0 md:p-6 lg:p-12">
-            <h1 className="mb-6 text-balance text-heading-lg md:text-heading-xl lg:text-heading-xl">
-              {post?.title}
-            </h1>
+            <header className="mt-8 p-4 pb-0 md:mt-12 md:p-6 lg:p-12">
+              <h1 className="mb-8 text-balance text-heading-lg md:text-heading-xl lg:text-heading-xl">
+                {post?.title}
+              </h1>
 
-            <Avatar.Container>
-              <Avatar.Image alt={post?.title} src={post?.author.avatar} />
-              <Avatar.Content>
-                <Avatar.Title>{post?.author.name}</Avatar.Title>
-                <Avatar.Description>
-                  Publicado em {''}
-                  <time dateTime={post.date}>{publishedDate}</time>
-                </Avatar.Description>
-              </Avatar.Content>
-            </Avatar.Container>
-          </header>
-        </article>
+              <Avatar.Container>
+                <Avatar.Image
+                  alt={post?.title}
+                  src={post.author.avatar.trim()}
+                />
+                <Avatar.Content>
+                  <Avatar.Title>{post?.author.name}</Avatar.Title>
+                  <Avatar.Description>
+                    Publicado em {''}
+                    <time dateTime={post.date}>{publishedDate}</time>
+                  </Avatar.Description>
+                </Avatar.Content>
+              </Avatar.Container>
+            </header>
+
+            <div className="prose prose-invert mt-12 max-w-none px-4 md:px-6 lg:px-12">
+              <Markdown content={post.body.raw} />
+            </div>
+          </article>
+        </div>
       </div>
     </main>
   )

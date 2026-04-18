@@ -2,7 +2,7 @@
 title: A jornada do empreendedorismo
 description: Empreendedores de todos os tamanhos confiam no Site.Set para lançar e gerenciar suas lojas online com facilidade. Descubra como nossa plataforma simplifica o processo de construção de sites e acelera o crescimento do seu negócio.
 date: 2024/12/05 10:20:00
-image: /assets/primeiro-post.png
+image: /assets/segundo-post.png
 author:
   name: Cristofer Carder
   avatar: /customer-02.png
