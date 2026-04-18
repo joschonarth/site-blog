@@ -12,6 +12,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
+import { useShare } from '@/hooks'
 
 export default function PostPage() {
   const router = useRouter()
@@ -20,6 +21,14 @@ export default function PostPage() {
   const post = allPosts.find(
     (post) => slug && post.slug.toLowerCase() === slug.toLowerCase()
   )
+
+  const postUrl = `https://site.set/blog/${slug}`
+
+  const { shareButtons } = useShare({
+    url: postUrl,
+    title: post?.title,
+    text: post?.description,
+  })
 
   if (!post) {
     return null
@@ -90,9 +99,15 @@ export default function PostPage() {
               </h2>
 
               <div className="space-y-3">
-                {[{ key: '1', providerName: 'LinkedIn' }].map((provider) => (
-                  <Button key={provider.key} variant="outline">
-                    {provider.providerName}
+                {shareButtons.map((provider) => (
+                  <Button
+                    className="w-full justify-start gap-2"
+                    key={provider.provider}
+                    onClick={() => provider.action()}
+                    variant="outline"
+                  >
+                    {provider.icon}
+                    {provider.name}
                   </Button>
                 ))}
               </div>
