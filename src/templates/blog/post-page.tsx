@@ -1,7 +1,6 @@
-import { allPosts } from 'contentlayer/generated'
+import type { Post } from 'contentlayer/generated'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { Avatar } from '@/components/avatar'
 import { Markdown } from '@/components/markdown'
 import {
@@ -14,15 +13,12 @@ import {
 import { Button } from '@/components/ui/button'
 import { useShare } from '@/hooks'
 
-export const PostPage = () => {
-  const router = useRouter()
-  const slug = router.query.slug as string
+export type PostPageProps = {
+  post: Post
+}
 
-  const post = allPosts.find(
-    (post) => slug && post.slug.toLowerCase() === slug.toLowerCase()
-  )
-
-  const postUrl = `https://site.set/blog/${slug}`
+export const PostPage = ({ post }: PostPageProps) => {
+  const postUrl = `https://site.set/blog/${post.slug}`
 
   const { shareButtons } = useShare({
     url: postUrl,
