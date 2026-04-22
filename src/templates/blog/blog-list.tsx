@@ -1,11 +1,15 @@
-import { allPosts } from 'contentlayer/generated'
+import type { Post } from 'contentlayer/generated'
 import { Inbox } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { Search } from '@/components/search'
 import { PostCard } from './components/post-card'
 import { PostGridCard } from './components/post-grid-card'
 
-export function BlogList() {
+export type BlogListProps = {
+  posts: Post[]
+}
+
+export function BlogList({ posts }: BlogListProps) {
   const router = useRouter()
   const query = router.query.q as string
 
@@ -13,11 +17,11 @@ export function BlogList() {
     ? `Resultados de busca para "${query}"`
     : 'Dicas e estratégias para impulsionar seu negócio'
 
-  const posts = query
-    ? allPosts.filter((post) =>
+  const postList = query
+    ? posts.filter((post) =>
         post.title.toLowerCase()?.includes(query.toLowerCase())
       )
-    : allPosts
+    : posts
 
   const hasPosts = posts.length > 0
 
@@ -41,7 +45,7 @@ export function BlogList() {
 
       {hasPosts && (
         <PostGridCard>
-          {posts.map((post) => (
+          {postList.map((post) => (
             <PostCard
               author={{
                 avatar: post.author.avatar,
