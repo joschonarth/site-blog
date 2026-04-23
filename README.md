@@ -1,6 +1,6 @@
 <div align="center">
 
-<img height="160" alt="siteset" src="/public/logo.svg" />
+<img alt="siteset" src="/public/logo.svg" />
 
 # Site.Set
 
@@ -24,7 +24,9 @@
 
 ---
 
-![home](./public/preview.png)
+<a href="https://siteset-eight.vercel.app" target="_blank">
+  <img width="1348" height="677" alt="landing-page" src="https://github.com/user-attachments/assets/0d2ec2df-c3b6-4435-9344-fbc0c89d9d58" />
+</a>
 
 ---
 
