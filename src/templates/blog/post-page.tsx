@@ -1,5 +1,3 @@
-'use client'
-
 import type { Post } from 'contentlayer/generated'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,8 +10,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { Button } from '@/components/ui/button'
-import { useShare } from '@/hooks'
+import { PostShare } from './components/post-share'
 
 export type PostPageProps = {
   post: Post
@@ -21,12 +18,6 @@ export type PostPageProps = {
 
 export const PostPage = ({ post }: PostPageProps) => {
   const postUrl = `https://site.set/blog/${post.slug}`
-
-  const { shareButtons } = useShare({
-    url: postUrl,
-    title: post?.title,
-    text: post?.description,
-  })
 
   if (!post) {
     return null
@@ -90,27 +81,11 @@ export const PostPage = ({ post }: PostPageProps) => {
             </div>
           </article>
 
-          <aside className="space-y-6">
-            <div className="rounded-lg bg-gray-700">
-              <h2 className="mb-4 hidden text-gray-100 text-heading-xs md:block">
-                Compartilhar
-              </h2>
-
-              <div className="flex justify-between gap-2 md:flex-col">
-                {shareButtons.map((provider) => (
-                  <Button
-                    className="w-fit justify-start gap-2 md:w-full"
-                    key={provider.provider}
-                    onClick={() => provider.action()}
-                    variant="outline"
-                  >
-                    {provider.icon}
-                    <span className="hidden md:block">{provider.name}</span>
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </aside>
+          <PostShare
+            description={post?.description}
+            title={post?.title}
+            url={postUrl}
+          />
         </div>
       </div>
     </main>
